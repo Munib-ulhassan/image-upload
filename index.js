@@ -1,6 +1,6 @@
 const multer = require('multer');
 const express = require('express');
-
+const fs = require('fs');
 const app = express();
 var cors = require('cors');
 app.use(cors());
@@ -43,7 +43,13 @@ app.post('/image',upload.array('file'), (req, res) => {
     console.log(imagePaths)
     res.status(200).json({status:1,imagePaths})
 })
+app.delete("/image/:id",(req,res)=>{
+    const {id} = req.params
+    
+    fs.unlinkSync(`./uploads/${id}`)
+    res.status(200).json({status:1})
 
+})
 app.listen(3030, () => {
     console.log('server is running on 4021 port')
  
